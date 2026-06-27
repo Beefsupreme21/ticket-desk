@@ -44,4 +44,30 @@
             </x-primary-button>
         </div>
     </form>
+
+    @if ($demoUsers->isNotEmpty())
+        <form method="POST" action="{{ route('demo-login') }}" class="mt-6">
+            @csrf
+
+            <x-input-label for="user_id" :value="__('Quick login')" />
+
+            <select
+                id="user_id"
+                name="user_id"
+                class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+            >
+                @foreach ($demoUsers as $user)
+                    <option value="{{ $user->id }}">
+                        {{ $user->name }} ({{ $user->role->label() }})
+                    </option>
+                @endforeach
+            </select>
+
+            <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
+
+            <x-secondary-button type="submit" class="w-full justify-center mt-4">
+                {{ __('Log in as selected user') }}
+            </x-secondary-button>
+        </form>
+    @endif
 </x-guest-layout>
