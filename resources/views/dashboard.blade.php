@@ -31,6 +31,46 @@
                     @else
                         <p>{{ __("You're logged in!") }}</p>
                     @endif
+                    @if (Auth::user()->isAdmin() && config('demo.errors_enabled'))
+                        <div class="mt-8 border-t border-gray-200 pt-6">
+                            <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('Nightwatch demo errors') }}
+                            </h3>
+                            <p class="mt-2 text-sm text-gray-600">
+                                {{ __('Trigger realistic failures for monitoring practice.') }}
+                            </p>
+
+                            <div class="mt-4 space-y-3">
+                                <form method="POST" action="{{ route('demo.errors.exception') }}">
+                                    @csrf
+                                    <x-secondary-button type="submit">
+                                        {{ __('Unhandled exception') }}
+                                    </x-secondary-button>
+                                </form>
+
+                                <form method="POST" action="{{ route('demo.errors.failed-job') }}">
+                                    @csrf
+                                    <x-secondary-button type="submit">
+                                        {{ __('Failed notification job') }}
+                                    </x-secondary-button>
+                                </form>
+
+                                <form method="POST" action="{{ route('demo.errors.webhook') }}">
+                                    @csrf
+                                    <x-secondary-button type="submit">
+                                        {{ __('Failed webhook') }}
+                                    </x-secondary-button>
+                                </form>
+
+                                <form method="POST" action="{{ route('demo.errors.missing-assignee') }}">
+                                    @csrf
+                                    <x-secondary-button type="submit">
+                                        {{ __('Missing assignee bug') }}
+                                    </x-secondary-button>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
